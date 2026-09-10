@@ -21,7 +21,7 @@ const socialIcons = [
   {
     id: "facebook",
     icon: faFacebookF,
-    link: "https://www.facebook.com/profile.php?id=61577852543267",
+    link: "https://www.facebook.com",
     label: "Visit my Facebook profile",
   },
 ];

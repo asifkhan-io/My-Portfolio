@@ -2,14 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import { FiCpu } from "react-icons/fi";
 
 const AiAssistant = ({ isOpen, onClose }) => {
-  console.log("API Key:", import.meta.env.VITE_GROQ_API_KEY);
-  console.log("All env vars:", import.meta.env);
   const [messages, setMessages] = useState([
     {
       type: "bot",
       text: "Hello! I'm Asif's AI assistant. How can I help you today? You can ask me about skills, projects, experience, or anything about Asif!",
     },
   ]);
+
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
@@ -22,122 +21,82 @@ const AiAssistant = ({ isOpen, onClose }) => {
     scrollToBottom();
   }, [messages]);
 
-  // Function to get AI response using Groq API
   const getAIResponse = async (userMessage, conversationHistory) => {
-    const systemPrompt = `You are an AI assistant for Asif's portfolio website. You help visitors learn about Asif and his work.
+    // Get key and remove potential whitespace/quotes
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY?.trim();
 
-    CRITICAL INSTRUCTIONS:
-    - NEVER repeat the same response twice, even for similar questions
-    - ALWAYS provide unique and different answers each time
-    - If asked the same question, give completely new information or perspective
-    - Vary your sentence structure, examples, and details with each response
-    - Use different emojis and conversation styles
-    - Ask different follow-up questions each time
-    - Share different aspects of Asif's work and experience
-    - Current conversation turn: ${Math.random()} // forces unique context
-    - STRICTLY FORBIDDEN: repeating any phrase or sentence from previous responses
-    - You MUST begin each response differently from all previous responses
-
-    Key information about Asif:
-    - Frontend web developer
-    - Location: Islamabad, Pakistan
-    - Skills: React, JavaScript, TypeScript, Node.js, Tailwind CSS, Next.js
-    - Experience: 2+ years in full-stack web development
-    - Services: Frontend development, responsive design, API integration, website optimization, code reviews, version control, deployment
-    - Projects: E-commerce platforms, dashboards, responsive websites, real-time applications
-    - Portfolio sections: Home, About, Skills, Projects, Services, Contact
-    - Open to: Freelance projects, full-time positions, collaboration opportunities
-    - Approach: Clean code, user-focused design, performance optimization
-
-    Guidelines:
-    - Be friendly, professional, and conversational
-    - Keep responses concise (2-4 sentences when possible)
-    - If asked about something not in your knowledge base, suggest checking the portfolio directly
-    - Encourage visitors to explore different sections of the website
-    - Use emojis occasionally to be friendly
-    - If someone asks about hiring/contacting, guide them to the Contact section
-
-    REMEMBER: Every response MUST be unique and different from previous ones!`;
-
-    try {
-      console.log("API Key exists:", !!import.meta.env.VITE_GROQ_API_KEY);
-      console.log(
-        "API Key starts with:",
-        import.meta.env.VITE_GROQ_API_KEY?.substring(0, 10),
+    if (!apiKey) {
+      throw new Error(
+        "VITE_GROQ_API_KEY is missing from .env.local file or Vercel environment variables.",
       );
-
-      const response = await fetch(
-        "https://api.groq.com/openai/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "llama-3.3-70b-versatile",
-            messages: [
-              { role: "system", content: systemPrompt },
-              ...conversationHistory,
-              { role: "user", content: userMessage },
-            ],
-            temperature: 1.2,
-            max_tokens: 250,
-            top_p: 0.9,
-            frequency_penalty: 1.0,
-            presence_penalty: 1.0,
-            stream: false,
-          }),
-        },
-      );
-
-      console.log("Response status:", response.status);
-      console.log("Response ok:", response.ok);
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Groq API Error Details:", errorData);
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${JSON.stringify(errorData)}`,
-        );
-      }
-
-      const data = await response.json();
-      console.log("API Response:", data);
-      return data.choices[0].message.content;
-    } catch (error) {
-      console.error("Full error:", error);
-      throw error;
     }
+
+    const systemPrompt = `You are an AI assistant for Asif's portfolio website. You help visitors learn about Asif and his work.
+Key info: Asif is a frontend web developer in Islamabad skilled in React, Next.js, and JavaScript. Keep responses brief and friendly.`;
+
+    const response = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-oss-20b",
+          messages: [
+            { role: "system", content: systemPrompt },
+            ...conversationHistory,
+            { role: "user", content: userMessage },
+          ],
+          temperature: 0.7,
+          max_tokens: 250,
+        }),
+      },
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error?.message ||
+          `API Request Failed with Status ${response.status}`,
+      );
+    }
+
+    return data.choices[0].message.content;
   };
 
-  // ADD THESE TWO FUNCTIONS BACK:
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userMessage = { type: "user", text: input };
+    const userMsgText = input;
+    const userMessage = { type: "user", text: userMsgText };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
 
     try {
-      const conversationHistory = messages.slice(-10).map((msg) => ({
-        role: msg.type === "user" ? "user" : "assistant",
-        content: msg.text,
-      }));
+      // Clean history formatting
+      const conversationHistory = messages
+        .filter((msg) => msg.text)
+        .slice(-10)
+        .map((msg) => ({
+          role: msg.type === "user" ? "user" : "assistant",
+          content: msg.text,
+        }));
 
-      const uniqueUserMessage = `[Turn ${messages.length}] ${input}`;
-      const aiResponse = await getAIResponse(
-        uniqueUserMessage,
-        conversationHistory,
-      );
+      const aiResponse = await getAIResponse(userMsgText, conversationHistory);
 
       const botMessage = { type: "bot", text: aiResponse };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
+      console.error("Groq Assistant Error:", error);
+
+      // Displays the actual error message inside the chat bubble for debugging
       const errorMessage = {
         type: "bot",
-        text: "I apologize, but I'm having trouble processing your request right now. Please try again in a moment, or explore the website directly! 😊",
+        text: `Error: ${error.message}`,
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -194,7 +153,7 @@ const AiAssistant = ({ isOpen, onClose }) => {
         </div>
 
         {/* Messages */}
-        <div className='h-[85vh] sm:h-80 overflow-y-auto p-4 bg-gray-50'>
+        <div className='min-h-0 flex-1 overflow-y-auto p-4 bg-gray-50'>
           {messages.map((message, index) => (
             <div
               key={index}
