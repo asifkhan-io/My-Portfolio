@@ -22,89 +22,94 @@ const AiAssistant = ({ isOpen, onClose }) => {
   }, [messages]);
 
   const getAIResponse = async (userMessage, conversationHistory) => {
-    // Get key and remove potential whitespace/quotes
-    const apiKey = import.meta.env.VITE_GROQ_API_KEY?.trim();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 40000);
 
-    if (!apiKey) {
-      throw new Error(
-        "VITE_GROQ_API_KEY is missing from .env.local file or Vercel environment variables.",
-      );
-    }
-
-    const systemPrompt = `You are an AI assistant for Asif's portfolio website. You help visitors learn about Asif and his work.
-Key info: Asif is a frontend web developer in Islamabad skilled in React, Next.js, and JavaScript. Keep responses brief and friendly.`;
-
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
+    try {
+      const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "openai/gpt-oss-20b",
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...conversationHistory,
-            { role: "user", content: userMessage },
-          ],
-          temperature: 0.7,
-          max_tokens: 250,
-        }),
-      },
-    );
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({ userMessage, conversationHistory }),
+      });
 
-    const data = await response.json();
+      // The Vercel rewrite can return index.html instead of JSON
+      const raw = await response.text();
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        throw new Error(
+          `The server returned a non-JSON response (status ${response.status}). Is the API server running?`,
+        );
+      }
 
-    if (!response.ok) {
-      throw new Error(
-        data.error?.message ||
-          `API Request Failed with Status ${response.status}`,
+      if (!response.ok) {
+        throw new Error(
+          data.error?.message ||
+            data.error ||
+            `API Request Failed with Status ${response.status}`,
+        );
+      }
+
+      // Support both response shapes
+      return (
+        data.content ||
+        data.choices?.[0]?.message?.content ||
+        "I could not generate a response."
       );
+    } catch (error) {
+      if (error.name === "AbortError") {
+        throw new Error("The request timed out. Please try again.");
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeout);
     }
-
-    return data.choices[0].message.content;
   };
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    const userMsgText = input.trim();
+    if (!userMsgText || isLoading) return;
 
-    const userMsgText = input;
     const userMessage = { type: "user", text: userMsgText };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
 
     try {
-      // Clean history formatting
+      // History must EXCLUDE the message we just added, otherwise the
+      // backend (which appends it again) receives it duplicated.
+      // Filter BEFORE mapping, so `text` still exists on each message.
       const conversationHistory = messages
-        .filter((msg) => msg.text)
         .slice(-10)
+        .filter(
+          (msg) =>
+            msg &&
+            typeof msg.text === "string" &&
+            msg.text.trim() &&
+            !msg.text.startsWith("Error:"),
+        )
         .map((msg) => ({
           role: msg.type === "user" ? "user" : "assistant",
           content: msg.text,
         }));
 
       const aiResponse = await getAIResponse(userMsgText, conversationHistory);
-
-      const botMessage = { type: "bot", text: aiResponse };
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages((prev) => [...prev, { type: "bot", text: aiResponse }]);
     } catch (error) {
       console.error("Groq Assistant Error:", error);
-
-      // Displays the actual error message inside the chat bubble for debugging
-      const errorMessage = {
-        type: "bot",
-        text: `Error: ${error.message}`,
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [
+        ...prev,
+        { type: "bot", text: `Error: ${error.message}` },
+      ]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleKeyPress = (e) => {
+  // NOTE: React 19 removed onKeyPress - must use onKeyDown
+  const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -197,7 +202,7 @@ Key info: Asif is a frontend web developer in Islamabad skilled in React, Next.j
               type='text'
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyDown}
               placeholder='Ask about skills, projects...'
               className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 text-sm'
               disabled={isLoading}

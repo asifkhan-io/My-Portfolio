@@ -9,7 +9,7 @@ const socialIcons = [
   {
     id: "github",
     icon: faGithub,
-    link: "https://github.com/Asif-Khan1122",
+    link: "https://github.com/Asifkhan-io",
     label: "Visit my GitHub profile",
   },
   {

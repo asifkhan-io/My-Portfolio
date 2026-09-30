@@ -13,9 +13,6 @@
 
 1. Clone Repository
 
-```
-git clone https://github.com/themewagon/picto.git
-```
 
 2. Install Dependencies
 
