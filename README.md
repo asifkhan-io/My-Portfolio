@@ -1,13 +1,9 @@
 <<<<<<< HEAD
-# picto - Personal Portfolio Free Template
 
 #### Preview
 
-- [Demo](https://themewagon.github.io/picto/)
+- [Demo](https://asifs.vercel.app/)
 
-#### Download
-
-- [Download from ThemeWagon](https://themewagon.com/themes/picto)
 
 ## Getting Started
 
