@@ -16,7 +16,7 @@ const Profile = () => {
             <img
               className='bg-soft-white h-[120%] object-cover'
               src={person}
-              alt='Asif Khan - Professional UX Designer'
+              alt='Asif Khan - Frontend Developer and UI/UX Designer'
             />
           </div>
           {/* Social media section */}
@@ -40,12 +40,12 @@ const Profile = () => {
           >
             <p className='mb-3'>
               I design and develop modern digital experiences including
-              websites, web apps, and dashboards. My focus is on clean UI,
-              smooth UX, and scalable frontend architecture.
+              React and Next.js websites, web apps, and dashboards. My focus is
+              on clean UI, smooth UX, and scalable frontend architecture.
             </p>
             <p className='mt-3'>
-              I design and develop services for customers specializing creating
-              stylish, modern websites, web services.
+              I help businesses and teams turn ideas into polished,
+              user-friendly digital products.
             </p>
           </div>
           <div className='mt-8 flex max-md:justify-center'>

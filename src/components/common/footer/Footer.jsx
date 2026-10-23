@@ -5,9 +5,8 @@ const navItems = [
   { id: 1, name: "About", url: "profile" },
   { id: 2, name: "Process", url: "work-process" },
   { id: 3, name: "Portfolio", url: "portfolio" },
-  { id: 4, name: "Blog", url: "blog" },
-  { id: 5, name: "Services", url: "services" },
-  { id: 6, name: "Contact", url: "contact" },
+  { id: 4, name: "Services", url: "services" },
+  { id: 5, name: "Contact", url: "contact" },
 ];
 const copyrightYear = new Date().getFullYear();
 

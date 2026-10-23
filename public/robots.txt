@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://asifkhan.dev/sitemap.xml
+Sitemap: https://asifs.vercel.app/sitemap.xml

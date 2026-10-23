@@ -2,8 +2,6 @@ import Projects from "./Projects";
 import card1 from "../../assets/images/portfolio-images/card-1.png";
 import card2 from "../../assets/images/portfolio-images/card-2.png";
 import card3 from "../../assets/images/portfolio-images/card-3.png";
-import card5 from "../../assets/images/portfolio-images/card-5.png";
-import card6 from "../../assets/images/portfolio-images/card-6.png";
 import aiChatbot from "../../assets/images/portfolio-images/ai-chatbot.svg";
 
 const projectData = [
@@ -46,24 +44,6 @@ const projectData = [
       "Created a responsive AI assistant that helps visitors learn about Asif's skills, experience and projects through a friendly conversational interface.",
     link: "https://asif-chatbot.vercel.app/",
     linkLabel: "Visit Site",
-  },
-  {
-    id: 5,
-    image: card5,
-    category: "UI-UX DESIGN",
-    title: "Product Admin Dashboard",
-    description:
-      "Implemented interactive charts and widgets to visualize product data effectively for stakeholders.",
-    link: "#!",
-  },
-  {
-    id: 6,
-    image: card6,
-    category: "UI-UX DESIGN",
-    title: "Product Admin Dashboard",
-    description:
-      "Enhanced user experience by streamlining workflows and optimizing interface components and so on.",
-    link: "#!",
   },
 ];
 

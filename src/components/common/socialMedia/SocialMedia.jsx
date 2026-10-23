@@ -1,7 +1,6 @@
 import {
   faGithub,
   faLinkedin,
-  faFacebookF,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,12 +16,6 @@ const socialIcons = [
     icon: faLinkedin,
     link: "https://www.linkedin.com/in/asif-khan-547105375/",
     label: "Visit my LinkedIn profile",
-  },
-  {
-    id: "facebook",
-    icon: faFacebookF,
-    link: "https://www.facebook.com",
-    label: "Visit my Facebook profile",
   },
 ];
 

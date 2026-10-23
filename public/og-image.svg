@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Asif Khan frontend developer portfolio</title>
+  <desc id="desc">Asif Khan, frontend developer and UI/UX designer based in Islamabad, Pakistan.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#24134f"/>
+      <stop offset=".55" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1040" cy="90" r="260" fill="#c084fc" opacity=".18"/>
+  <circle cx="140" cy="590" r="250" fill="#67e8f9" opacity=".12"/>
+  <rect x="86" y="86" width="8" height="458" rx="4" fill="#f0abfc"/>
+  <text x="145" y="220" fill="#e9d5ff" font-family="Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="6">ASIF-DEV</text>
+  <text x="145" y="320" fill="#ffffff" font-family="Arial, sans-serif" font-size="66" font-weight="700">Asif Khan</text>
+  <text x="145" y="382" fill="#ffffff" font-family="Arial, sans-serif" font-size="38">Frontend Developer</text>
+  <text x="145" y="440" fill="#ede9fe" font-family="Arial, sans-serif" font-size="25">React · Next.js · UI/UX</text>
+  <text x="145" y="496" fill="#ddd6fe" font-family="Arial, sans-serif" font-size="22">Islamabad, Pakistan</text>
+  <rect x="850" y="206" width="190" height="150" rx="28" fill="#ffffff" opacity=".94"/>
+  <path d="M905 256h80v55h-80z" fill="#7c3aed"/>
+  <path d="M920 244v-18m50 18v-18M910 288h70M930 312h30" stroke="#7c3aed" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="1018" cy="336" r="15" fill="#86efac" stroke="#ffffff" stroke-width="6"/>
+</svg>

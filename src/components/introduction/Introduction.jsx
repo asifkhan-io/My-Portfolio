@@ -30,17 +30,17 @@ const Introduction = () => {
       <div className='w-full flex flex-col justify-between max-lg:text-center'>
         <div className='pt-13 me-31.5 w-full lg:w-auto transition-all duration-500'>
           <h1 className='text-3xl xxs:text-4xl sm:max-xl:text-5xl xl:text-6xl font-semibold w-full'>
-            Hello, I’m
+            Asif Khan
             <span className='text-nowrap shrink-0 inline-block w-full'>
-              Asif Khan
+              Frontend Developer
             </span>
           </h1>
           <p className='text-xs xxs:text-lg lg:text-[18px] my-6'>
-            I'm a Freelance <span className='bg-highlight'>UI/UX Designer</span>{" "}
-            and <span className='bg-highlight'> Developer</span> based in
-            Islamabad, Pakistan.I strive to build immersive and visually
-            engaging web applications through carefully crafted code and
-            user-centered design.
+            I'm a freelance{" "}
+            <span className='bg-highlight'>React and Next.js developer</span>{" "}
+            and <span className='bg-highlight'>UI/UX designer</span> based in
+            Islamabad, Pakistan. I build responsive, accessible web
+            applications with thoughtful user experiences.
           </p>
           <p className='text-center lg:text-start'>
             <a
