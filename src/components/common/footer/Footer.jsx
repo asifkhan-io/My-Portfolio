@@ -14,8 +14,8 @@ const Footer = () => {
   return (
     <div className='pt-25 md:pt-40 content max-2xl:px-3'>
       <div className='flex max-md:flex-col justify-between mx-0 items-center h-full w-full text-neutral-200'>
-        <a href='#' className='flex items-center border-0'>
-          <img src={logo} className='h-8 sm:h-14 rounded-2xl' alt='logo' />
+        <a href='#introduction' className='flex items-center border-0'>
+          <img src={logo} className='h-8 sm:h-14 rounded-2xl' alt='Asif-Dev logo' />
           <p className='text-3xl sm:text-[32px] my-auto ms-3 font-semibold'>
             Asif-Dev
           </p>

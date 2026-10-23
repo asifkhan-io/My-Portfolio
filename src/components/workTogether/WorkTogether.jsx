@@ -5,15 +5,15 @@ const WorkTogether = () => {
   return (
     <div className='py-25 max-w-169 mx-auto px-2'>
       <div className='text-center'>
-        <p className='text-white md:font-semibold text-2xl sm:text-3xl md:text-5xl pb-8'>
+        <h2 className='text-white md:font-semibold text-2xl sm:text-3xl md:text-5xl pb-8'>
           Do you have a Project Idea? Let's discuss your project!
-        </p>
+        </h2>
         <p className='text-[#A5ACB5] text-xs sm:text-lg font-normal text-center pb-8'>
           I'm always open to discussing new projects and creative ideas. Let's
           connect and build something amazing together.
         </p>
         <a
-          href='https://wa.me/923709199062'
+          href='https://wa.me/923359763990'
           className='btn btn-primary px-4 md:px-6.5 py-3 md:py-6 text-[12px] md:text-[16px]'
           target='_blank'
           rel='noopener noreferrer'

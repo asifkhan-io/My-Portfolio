@@ -8,17 +8,26 @@ const Projects = ({ data }) => {
   const linkLabel = data?.linkLabel || "Case Study";
 
   return (
-    <div className='max-w-106 rounded-lg outline-[#FFFFFF] hover:shadow-2xl duration-300 transition-all shadow-gray-300 border border-gray-200'>
-      <img src={data?.image} alt={`${data?.title} image`} />
-      <div className='p-4 xs:p-8'>
-        <p className='text-gray-400 text-xs font-medium'>{data?.category}</p>
-        <p className='text-gray-900 text-md xxs:text-lg font-semibold pt-1 mb-3'>
-          {data?.title}
+    <article className='group flex h-full max-w-106 flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_10px_35px_rgba(19,34,56,0.06)] transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-200 hover:shadow-[0_20px_45px_rgba(19,34,56,0.14)]'>
+      <div className='relative aspect-[16/10] overflow-hidden bg-slate-100'>
+        <img
+          src={data?.image}
+          alt={`${data?.title} project preview`}
+          className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-105'
+        />
+        <div className='absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-transparent opacity-70' />
+        <span className='absolute left-4 top-4 rounded-full border border-white/30 bg-slate-900/65 px-3 py-1.5 text-[10px] font-semibold tracking-[0.12em] text-white backdrop-blur-sm'>
+          {data?.category}
+        </span>
+      </div>
+      <div className='flex flex-1 flex-col p-5 xs:p-7'>
+        <p className='mb-2 text-xs font-medium uppercase tracking-[0.12em] text-picto-primary'>
+          Featured project
         </p>
-        <p
-          style={{ lineHeight: "20px", letterSpacing: "0%" }}
-          className='text-gray-600 text-xs xxs:text-[14px] text-wrap'
-        >
+        <h3 className='text-lg font-semibold text-slate-900 xxs:text-xl'>
+          {data?.title}
+        </h3>
+        <p className='mt-3 text-xs leading-6 text-slate-600 xxs:text-sm'>
           {data?.description}
         </p>
         {hasLiveLink && (
@@ -26,16 +35,16 @@ const Projects = ({ data }) => {
             href={rawLink}
             target={isExternal ? "_blank" : undefined}
             rel={isExternal ? "noopener noreferrer" : undefined}
-            className='btn hover:border-picto-primary hover:text-picto-primary bg-white text-sm xs:text-[16px] font-semibold hover:gap-3 xs:hover:gap-4 transition-all duration-300 mt-5 xs:py-5.75 px-6 max-sm:w-full'
+            className='mt-auto flex w-fit items-center gap-2 pt-6 text-sm font-semibold text-slate-900 transition-all duration-300 hover:gap-3 hover:text-picto-primary xs:text-base'
           >
             {linkLabel}
-            <span className='ms-1 xs:ms-3'>
-              <FontAwesomeIcon icon={faArrowRight} size='l' className='' />
+            <span className='transition-transform duration-300 group-hover:translate-x-0.5'>
+              <FontAwesomeIcon icon={faArrowRight} />
             </span>
           </a>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 

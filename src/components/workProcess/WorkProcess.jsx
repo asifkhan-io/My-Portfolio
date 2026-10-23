@@ -42,7 +42,7 @@ const WorkProcess = () => {
       id="work-process"
     >
       <div className="lg:pe-10 xl:pe-35.75 max-xs:mb-3 max-xl:mb-8">
-        <p className="section-title max-xl:text-center">Work Process</p>
+        <h2 className="section-title max-xl:text-center">Work Process</h2>
         <p className="mt-6 mb-4 md:text-[18px] text-sm font-normal max-xl:text-center text-gray-500">
           Driven by design and powered by code, I create digital interfaces that
           feel intuitive and perform seamlessly. Every layout, animation, and

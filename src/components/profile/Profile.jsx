@@ -33,7 +33,7 @@ const Profile = () => {
           <h2
             className={`text-2xl xxs:text-3xl sm:text-4xl lg:text-[38px] text-[min(24px,38px)] max-md:text-center font-semibold mb-8`}
           >
-            I am Professional User Experience Designer
+            I am a Frontend Developer and UI/UX Designer
           </h2>
           <div
             className={`text-xs xs:text-[16px] lg:text-lg font-normal max-md:text-center text-gray-600`}
@@ -51,7 +51,7 @@ const Profile = () => {
           <div className='mt-8 flex max-md:justify-center'>
             <a
               className='btn xxs:btn-lg px-6 max-xs:px-2 xxs:py-3 btn-primary text-xs xxs:text-[14px] sm:text-[16px]'
-              href='#projects'
+              href='#portfolio'
             >
               My Projects
             </a>

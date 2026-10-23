@@ -5,8 +5,9 @@ import { handleChat, GROQ_MODEL } from "./lib/chat-core.js";
 
 // Load BOTH .env and .env.local (dotenv.config() alone only reads .env,
 // so the key in .env.local was never picked up -> "Bearer undefined" -> 401)
-dotenv.config({ path: ".env" });
+// Load local overrides first so .env.local takes precedence over .env.
 dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 const PORT = process.env.PORT || 3001;
 

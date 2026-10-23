@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FiCpu } from "react-icons/fi";
+import { FiCpu, FiSend, FiX } from "react-icons/fi";
 
 const AiAssistant = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
@@ -119,56 +119,53 @@ const AiAssistant = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className='fixed inset-x-4 bottom-20 sm:inset-x-auto sm:right-5 sm:left-auto z-50 transition-all duration-300 sm:max-w-96 w-auto'>
+    <div className='fixed inset-x-2 bottom-4 z-50 w-auto transition-all duration-300 sm:inset-x-auto sm:right-5 sm:bottom-5 sm:w-[min(24rem,calc(100vw-2.5rem))]'>
       <div
-        className='bg-white w-full sm:w-96 rounded-2xl shadow-2xl flex flex-col overflow-hidden'
-        style={{ maxHeight: "min(85vh, 600px)" }}
+        role='dialog'
+        aria-modal='false'
+        aria-labelledby='ai-assistant-title'
+        className='flex h-[min(600px,calc(100dvh-5rem))] w-full flex-col overflow-hidden rounded-3xl border border-white/70 bg-white shadow-[0_20px_70px_-20px_rgba(31,41,55,0.45)]'
       >
         {/* Header */}
-        <div className='bg-gradient-to-r from-purple-600 to-blue-500 p-3 sm:p-4 flex justify-between items-center shrink-0'>
-          <div className='flex items-center gap-2'>
-            <div className='w-8 h-8 bg-white rounded-full flex items-center justify-center'>
-              <FiCpu className='text-purple-600' />
+        <div className='flex shrink-0 items-center justify-between bg-gradient-to-br from-[#7c3aed] via-purple-600 to-[#2563eb] px-4 py-3.5 sm:px-5'>
+          <div className='flex min-w-0 items-center gap-3'>
+            <div className='relative flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/95 shadow-sm'>
+              <FiCpu className='text-lg text-purple-600' />
+              <span className='absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-purple-600 bg-emerald-400' />
             </div>
-            <div>
-              <h3 className='text-white font-semibold text-sm'>AI Assistant</h3>
-              <p className='text-purple-100 text-xs'>
+            <div className='min-w-0'>
+              <h3 id='ai-assistant-title' className='truncate text-sm font-semibold text-white sm:text-base'>
+                AI Assistant
+              </h3>
+              <p className='truncate text-xs text-purple-100'>
                 Ask me anything about Asif
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className='text-white hover:text-purple-200 transition-colors'
+            aria-label='Close AI assistant'
+            className='ml-3 flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-xl text-white/80 transition-colors hover:bg-white/15 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/70'
           >
-            <svg
-              className='w-5 h-5 cursor-pointer'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M6 18L18 6M6 6l12 12'
-              />
-            </svg>
+            <FiX className='text-lg' aria-hidden='true' />
           </button>
         </div>
 
         {/* Messages */}
-        <div className='min-h-0 flex-1 overflow-y-auto p-4 bg-gray-50'>
+        <div
+          className='min-h-0 flex-1 space-y-1 overflow-y-auto bg-slate-50/90 p-3 sm:p-4'
+          aria-live='polite'
+        >
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`mb-3 flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[85%] sm:max-w-[80%] p-3 rounded-lg text-sm break-words ${
+                className={`max-w-[88%] break-words rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm sm:max-w-[82%] ${
                   message.type === "user"
-                    ? "bg-purple-600 text-white rounded-br-none"
-                    : "bg-white text-gray-800 border border-gray-200 rounded-bl-none"
+                    ? "rounded-br-md bg-purple-600 text-white"
+                    : "rounded-bl-md border border-slate-200 bg-white text-slate-700"
                 }`}
               >
                 {message.text}
@@ -176,19 +173,17 @@ const AiAssistant = ({ isOpen, onClose }) => {
             </div>
           ))}
           {isLoading && (
-            <div className='flex justify-start mb-3'>
-              <div className='bg-white border border-gray-200 p-3 rounded-lg rounded-bl-none'>
-                <div className='flex gap-1'>
-                  <div className='w-2 h-2 bg-gray-400 rounded-full animate-bounce'></div>
-                  <div
-                    className='w-2 h-2 bg-gray-400 rounded-full animate-bounce'
-                    style={{ animationDelay: "0.2s" }}
-                  ></div>
-                  <div
-                    className='w-2 h-2 bg-gray-400 rounded-full animate-bounce'
-                    style={{ animationDelay: "0.4s" }}
-                  ></div>
-                </div>
+            <div className='flex justify-start'>
+              <div className='flex items-center gap-1.5 rounded-2xl rounded-bl-md border border-slate-200 bg-white px-4 py-3 shadow-sm'>
+                <div className='h-2 w-2 animate-bounce rounded-full bg-purple-400'></div>
+                <div
+                  className='h-2 w-2 animate-bounce rounded-full bg-purple-400'
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+                <div
+                  className='h-2 w-2 animate-bounce rounded-full bg-purple-400'
+                  style={{ animationDelay: "0.4s" }}
+                ></div>
               </div>
             </div>
           )}
@@ -196,35 +191,25 @@ const AiAssistant = ({ isOpen, onClose }) => {
         </div>
 
         {/* Input */}
-        <div className='p-3 border-t border-gray-200 bg-white'>
-          <div className='flex items-center gap-2'>
+        <div className='shrink-0 border-t border-slate-200 bg-white p-3 sm:p-4'>
+          <div className='flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-1.5 transition-colors focus-within:border-purple-400 focus-within:ring-2 focus-within:ring-purple-100'>
             <input
               type='text'
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder='Ask about skills, projects...'
-              className='flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 text-sm'
+              aria-label='Ask the AI assistant a question'
+              className='min-w-0 flex-1 bg-transparent px-2 py-2 text-sm text-slate-700 outline-none placeholder:text-slate-400'
               disabled={isLoading}
             />
             <button
               onClick={handleSend}
               disabled={isLoading || !input.trim()}
-              className='bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 cursor-pointer'
+              aria-label='Send message'
+              className='flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-purple-600 text-white transition-colors hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-40'
             >
-              <svg
-                className='w-4 h-4'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M12 19l9 2-9-18-9 18 9-2zm0 0v-8'
-                />
-              </svg>
+              <FiSend className='text-base' aria-hidden='true' />
             </button>
           </div>
         </div>

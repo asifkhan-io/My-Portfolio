@@ -160,7 +160,7 @@ const HappyClients = () => {
   return (
     <div className="content py-10 md:py-25 flex flex-col items-center px-2">
       <div className="max-w-144.25 text-center ">
-        <p className="section-title mb-6">Happy Clients</p>
+        <h2 className="section-title mb-6">Happy Clients</h2>
         <p className="text-[14px] sm:text-lg text-soft-dark font-normal">
           I've had the pleasure of working with a diverse range of companies,
           from startups to established brands.
