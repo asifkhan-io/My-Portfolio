@@ -1,41 +1,86 @@
 import logo from "../../../assets/logo.png";
+import SocialMedia from "../socialMedia/SocialMedia";
 
 const navItems = [
   { id: 1, name: "About", url: "profile" },
   { id: 2, name: "Process", url: "work-process" },
   { id: 3, name: "Portfolio", url: "portfolio" },
   { id: 4, name: "Blog", url: "blog" },
-  { id: 5, name: "Services", url: "Services" },
-  { id: 6, name: "Contact", url: "Contact" },
+  { id: 5, name: "Services", url: "services" },
+  { id: 6, name: "Contact", url: "contact" },
 ];
 const copyrightYear = new Date().getFullYear();
 
 const Footer = () => {
   return (
-    <div className='pt-25 md:pt-40 content max-2xl:px-3'>
-      <div className='flex max-md:flex-col justify-between mx-0 items-center h-full w-full text-neutral-200'>
-        <a href='#introduction' className='flex items-center border-0'>
-          <img src={logo} className='h-8 sm:h-14 rounded-2xl' alt='Asif-Dev logo' />
-          <p className='text-3xl sm:text-[32px] my-auto ms-3 font-semibold'>
-            Asif-Dev
+    <div className='content px-4 pb-6 pt-16 text-neutral-200 sm:px-6 md:pt-24'>
+      <div className='grid gap-10 border-b border-white/10 pb-10 md:grid-cols-[1.2fr_1fr_1fr] md:gap-8'>
+        <div>
+          <a href='#introduction' className='flex w-fit items-center border-0'>
+            <img
+              src={logo}
+              className='h-10 rounded-xl sm:h-12'
+              alt='Asif-Dev logo'
+            />
+            <span className='ms-3 text-2xl font-semibold sm:text-3xl'>
+              Asif-Dev
+            </span>
+          </a>
+          <p className='mt-4 max-w-sm text-sm leading-6 text-slate-300'>
+            Frontend developer and UI/UX designer creating thoughtful,
+            high-performing digital experiences from Islamabad, Pakistan.
           </p>
-        </a>
-        <div className='mx-7 max-md:my-7 text-center'>
-          {navItems.map((item) => (
-            <a
-              key={item.id}
-              className='mx-2 group inline-block relative w-fit text-[12px] sm:text-[16px]'
-              href={`#${item.url.toLowerCase()}`}
-            >
-              {item.name}
-              <span className='absolute left-0 bottom-0 h-0.5 w-full bg-white scale-x-0 duration-300 group-hover:scale-x-100'></span>
-            </a>
-          ))}
+          <div className='mt-5'>
+            <SocialMedia />
+          </div>
+        </div>
+
+        <div>
+          <h2 className='mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-white'>
+            Explore
+          </h2>
+          <nav className='grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-3 md:grid-cols-1'>
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                className='group relative w-fit text-sm text-slate-300 transition-colors hover:text-white'
+                href={`#${item.url}`}
+              >
+                {item.name}
+                <span className='absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-white transition-transform duration-300 group-hover:scale-x-100' />
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div>
+          <h2 className='mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-white'>
+            Let’s connect
+          </h2>
+          <p className='text-sm leading-6 text-slate-300'>
+            Have an idea or project in mind? I’d be happy to hear about it.
+          </p>
+          <a
+            href='mailto:asifk.code@gmail.com'
+            className='mt-4 inline-block text-sm font-medium text-white transition-colors hover:text-purple-300'
+          >
+            asifk.code@gmail.com
+          </a>
+          <a
+            href='https://wa.me/923359763990'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='mt-4 block w-fit rounded-lg bg-picto-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-picto-primary-dark'
+          >
+            Start a conversation
+          </a>
         </div>
       </div>
-      <p className='text-white text-center max-xs:text-[12px] max-md:text-[14px] w-full py-10'>
-        Copyright &copy; {copyrightYear} Asif-Dev.{" "}
-      </p>
+
+      <div className='flex flex-col items-center justify-between gap-3 pt-6 text-center text-xs text-slate-400 sm:flex-row sm:text-left'>
+        <p>Copyright &copy; {copyrightYear} Asif-Dev. All rights reserved.</p>
+        <p>Available for freelance opportunities</p>
+      </div>
     </div>
   );
 };
